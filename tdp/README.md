@@ -12,7 +12,9 @@ The file `./Jenkinsfile-sample` can be used in a Jenkins / Kubernetes environmen
 mvn clean package assembly:single -DskipTests -Dhadoop.profile=3.0
 ```
 
-The command generates a `.tar.gz` file of the release at `./hbase-assembly/target/hbase-2.1.10-TDP-0.1.0-SNAPSHOT-bin.tar.gz`.
+The command generates a `.tar.gz` file of the release at `./hbase-assembly/target/hbase-2.1.10-TDP-0.1.0-SNAPSHOT-bin.tar.gz`. 
+
+Replace `package` for `install` in the above command to ensure built package is available in your local maven repository post build.
 
 ## Testing parameters
 
