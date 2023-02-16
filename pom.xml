@@ -158,14 +158,6 @@
     </repository>
   </repositories>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>nexus</id>
-      <name>my Nexus</name>
-      <url>http://172.19.0.2:8081/repository/my-maven-test/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <developers>
     <developer>
       <id>acube123</id>
@@ -3858,13 +3850,10 @@
     </plugins>
   </reporting>
   <distributionManagement>
-    <site>
-      <id>hbase.apache.org</id>
-      <name>HBase Website at hbase.apache.org</name>
-      <!-- On why this is the tmp dir and not hbase.apache.org, see
-               https://issues.apache.org/jira/browse/HBASE-7593?focusedCommentId=13555866&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-13555866
-               -->
-      <url>file:///tmp</url>
-    </site>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>my Nexus</name>
+      <url>http://172.19.0.2:8081/repository/my-maven-test/</url>
+    </snapshotRepository>
   </distributionManagement>
 </project>
