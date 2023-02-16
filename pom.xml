@@ -149,6 +149,23 @@
       <archive>https://lists.apache.org/list.html?user-zh@hbase.apache.org</archive>
     </mailingList>
   </mailingLists>
+
+  <repositories>
+      <repository>
+      <id>nexus</id>
+      <name>my Nexus</name>
+      <url>http://172.19.0.2:8081/repository/my-maven-test/</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>my Nexus</name>
+      <url>http://172.19.0.2:8081/repository/my-maven-test/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <developers>
     <developer>
       <id>acube123</id>
