@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo "Building..."
                 sh '''
-                mvn clean install -DskipTests -Dhadoop.profile=3.0
+                mvn clean install assembly:single -DskipTests -Dhadoop.profile=3.0
                 '''
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo "Testing..."
                 sh '''
-                mvn clean test -Dhadoop.profile=3.0 --fail-never
+                mvn test -Dhadoop.profile=3.0 --fail-never
                 '''
             }
         }
