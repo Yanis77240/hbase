@@ -19,7 +19,7 @@ podTemplate(containers: [
             stage ('Build') {
                 echo "Building.."
                 sh '''
-                mvn clean install assembly:single -DskipTests -Dhadoop.profile=3.0
+                mvn clean install -DskipTests -Dhadoop.profile=3.0
                 '''
             }
             /*stage('Test') {
@@ -31,7 +31,7 @@ podTemplate(containers: [
             stage('Deliver') {
                 echo "Deploy..."
                 withCredentials([usernamePassword(credentialsId: '4b87bd68-ad4c-11ed-afa1-0242ac120002', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                    sh 'mvn clean deploy -DskipTests -Dhadoop.profile=3.0 -s settings.xml'
+                    sh 'mvn clean deploy assembly:single -DskipTests -Dhadoop.profile=3.0 -s settings.xml'
                 }
             }
             stage("Publish tar.gz to Nexus") {
