@@ -1492,7 +1492,7 @@
     <surefire.testFailureIgnore>false</surefire.testFailureIgnore>
     <test.output.tofile>true</test.output.tofile>
     <surefire.timeout>900</surefire.timeout>
-    <test.exclude.pattern>**/TestCoprocessorTableEndpoint.java, **/TestImportExport.java, **/TestAssignmentManagerMetrics.java, **/TestPartialResultsFromClientSide.java</test.exclude.pattern>
+    <!--<test.exclude.pattern>**/TestCoprocessorTableEndpoint.java, **/TestImportExport.java, **/TestAssignmentManagerMetrics.java, **/TestPartialResultsFromClientSide.java</test.exclude.pattern>-->
     <!-- default Xmx value is 2800m. Use -Dsurefire.Xmx=xxg to run tests with different JVM Xmx value -->
     <surefire.Xmx>2800m</surefire.Xmx>
     <surefire.cygwinXmx>2800m</surefire.cygwinXmx>
@@ -3604,6 +3604,15 @@
   <!-- See https://jira.codehaus.org/browse/MSITE-443 why the settings need to be here and not in pluginManagement. -->
   <reporting>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <aggregate>true</aggregate>
+          <linkXRef>true</linkXRef>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <reportSets>
