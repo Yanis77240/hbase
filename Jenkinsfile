@@ -29,18 +29,8 @@ podTemplate(containers: [
             stage ('Build') {
                 echo "Building.."
                 sh '''
-                mvn clean install -DskipTests -Dhadoop.profile=3.0
+                mvn clean install -DskipTests -Dhadoop.profile=3.0 -Dstyle.color=never
                 '''
-            }
-            stage('Test') {
-                echo "Testing..."
-                withEnv(["number=${currentBuild.number}"]) {
-                    withCredentials([usernamePassword(credentialsId: '4b87bd68-ad4c-11ed-afa1-0242ac120002', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                        sh 'mvn clean test -Dhadoop.profile=3.0 -Dsurefire.rerunFailingTestsCount=3 --fail-never'
-                        sh 'mvn surefire-report:report-only  -Daggregate=true'
-                        sh 'curl -v -u $user:$pass --upload-file target/site/surefire-report.html http://10.110.4.212:8081/repository/test-reports/hbase/surefire-report-${number}.html'
-                    }
-                }
             }
             stage('Test') {
                 echo "Testing..."
@@ -48,7 +38,7 @@ podTemplate(containers: [
                     withEnv(["number=${currentBuild.number}"]) {
                         /* Perform the tests and the surefire reporting*/
                         sh '''
-                        mvn clean test -Dhadoop.profile=3.0 -Dsurefire.rerunFailingTestsCount=3 --fail-never | tee output.txt
+                        mvn clean test -Dhadoop.profile=3.0 -Dsurefire.rerunFailingTestsCount=3 --fail-never -Dstyle.color=never | tee output.txt
                         '''
                         sh 'mvn surefire-report:report-only  -Daggregate=true'
                         sh 'curl -v -u $user:$pass --upload-file target/site/surefire-report.html http://10.110.4.212:8081/repository/test-reports/hbase/surefire-report-${number}.html'
@@ -60,7 +50,7 @@ podTemplate(containers: [
                         cd test-comparison
                         ./transformation.sh
                         ./src/decision.sh ${number}
-                        curl -v -u $user:$pass --upload-file results-${number}.json http://10.110.4.212:8081/repository/test-reports/hbase/surefire-report-${number}.html
+                        curl -v -u $user:$pass --upload-file results-${number}.json http://10.110.4.212:8081/repository/component-test-comparison/hbase-2.1/results-${number}.json
                         '''
                     }
                 }
@@ -68,7 +58,7 @@ podTemplate(containers: [
             stage('Deliver') {
                 echo "Deploy..."
                 withCredentials([usernamePassword(credentialsId: '4b87bd68-ad4c-11ed-afa1-0242ac120002', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                    sh 'mvn clean deploy assembly:single -DskipTests -Dhadoop.profile=3.0 -s settings.xml'
+                    sh 'mvn clean deploy assembly:single -DskipTests -Dhadoop.profile=3.0 -Dstyle.color=never -s settings.xml'
                 }
             }
             stage("Publish tar.gz to Nexus") {
